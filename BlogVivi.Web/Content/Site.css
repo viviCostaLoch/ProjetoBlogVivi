@@ -1,0 +1,110 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+  
+}
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+.cadastro-post {
+    display: flex;
+}
+    .cadastro-post label {
+        margin-right: 6px;
+        margin-top: 6px;
+    }
+    .cadastro-post input[type = "text"] {
+        width: 200px;
+        margin-right: 6px;
+    }
+    .remover-tag {
+        background-size: 18px !important;
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+
+    }
+    /*icone  excluir*/                                             /* ponto na frente seletor de classe*/
+.icone-excluir {
+ background: url(../Content/icones/excluir.png) no-repeat;
+ margin-left: 15px;
+
+}
+/*Icone autor*/
+.icone-autor {
+ background: url(../Content/icones/autor.png) no-repeat;
+ margin-left: 15px;
+
+}
+
+/*icone calendario*/
+.icone-calendario {
+ background: url(../Content/icones/calendario.png) no-repeat;
+ margin-left: 15px;
+
+}
+
+/*icone comentario*/
+.icone-comentario {
+ background: url(../Content/icones/comentario.png) no-repeat;
+ margin-left: 15px;
+
+}
+
+/*icone editar*/
+.icone-editar {
+ background: url(../Content/icones/editar.png) no-repeat;
+ margin-left: 15px;
+
+}
+/*dimensionar os icones*/
+.div-imagem {
+    background-size: 18px !important;
+    display: inline-block;
+    width: 18px;
+    height:18px;
+}
+
+
+

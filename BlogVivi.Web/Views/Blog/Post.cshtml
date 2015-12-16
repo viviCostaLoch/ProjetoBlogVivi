@@ -1,0 +1,45 @@
+﻿@model BlogVivi.Web.Models.Blog.DetalhesPostViewModel
+@{
+    ViewBag.Title = "Post";
+
+}
+@section Scripts
+{
+    <script src="@Url.Content("~/Scripts/Views/Blog/Index.js")"></script>
+}
+
+
+<h2>@Model.Titulo</h2>
+<div>
+    <div class="div-imagem icone-calendario"></div>
+    @Model.datadepublicacao.ToString("dd/MM/yyyy HH:mm")
+    <div class="div-imagem icone-autor"></div>
+    @Model.Autor
+    <div class="div-imagem icone-comentario"></div>
+    0
+   @if(Request.IsAuthenticated){
+    <div class="div-imagem icone-editar"></div>
+    @Html.ActionLink("Editar", "EditarPost", "Administracao", new { id = @Model.id },
+                                                               new { @class = "editar-post" })
+    
+    <div class="div-imagem icone-excluir"></div>
+    @Html.ActionLink("Excluir", "ExcluirPost", "Administracao", new { id =@Model.id },new { @class = "excluir-post" })
+    }
+</div>
+
+@Model.descricao
+<h2>Tags</h2>
+<div class="Form-group">
+    <ul id="resultado">
+        @if (Model.Tags != null)
+            {
+                foreach (var item in Model.Tags)
+                {
+                <li>@Html.ActionLink(item, "Index", "Blog", new { tag = item }, null)</li>
+                
+                    <Input type="hidden" name="Tags" value="@item" />
+            }
+        }
+    </ul>
+</div>
+

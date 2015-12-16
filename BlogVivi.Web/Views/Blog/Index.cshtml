@@ -1,0 +1,77 @@
+﻿@model BlogVivi.Web.Models.Blog.ListarPostViewModel
+@{
+    ViewBag.Title = "Posts";
+    var tipoPesquisa = "";
+    if (Model.Tag != null)
+    {
+        tipoPesquisa = string.Format("  - Tag: {0}", Model.Tag);
+    }
+}
+    
+@section Scripts
+{
+    <script src="@Url.Content("~/Scripts/Views/Blog/Index.js")"></script>
+}
+<h1> Posts @tipoPesquisa</h1>
+<div class=" row">
+    <div class="col-md-10">
+        @foreach (var item in Model.Posts)
+        {
+            <h2>@Html.ActionLink(item.Titulo, "Post", "Blog", new { id = item.Id, ano = item.DataPublicacao.Year, mes = item.DataPublicacao.Month, dia = item.DataPublicacao.Day, titulo = item.Titulo }, null)</h2>
+            <div>
+                <div class="div-imagem icone-calendario"></div>
+                @item.DataPublicacao.ToString("dd/MM/yyyy HH:mm")
+                <div class="div-imagem icone-autor"></div>
+                @item.Autor
+                <div class="div-imagem icone-comentario"></div>
+                @item.Comentario.Count
+                @if (Request.IsAuthenticated) { 
+                <div class="div-imagem icone-editar"></div>
+                @Html.ActionLink("Editar", "EditarPost", "Administracao", new { id = item.Id },
+                                                               new { @class = "editar-post" })
+                
+                <div class="div-imagem icone-excluir"></div>
+                @Html.ActionLink("Excluir", "ExcluirPost", "Administracao", new { id = item.Id },
+                                                                new { @class = "excluir-post" })
+                }
+            </div>
+
+
+            <div>
+                @item.Resumo
+                
+            </div>
+
+            <div>
+               
+                @Html.ActionLink("Continue lendo...", "Post", "Blog", new
+           {
+               id = item.Id,
+               ano = item.DataPublicacao.Year,
+               mes = item.DataPublicacao.Month,
+               dia = item.DataPublicacao.Day,
+               titulo = item.Titulo
+           }, null)
+            </div>
+
+
+            //@Html.ActionLink("Excluir", "ExcluirPost", "Administracao", new { id = item.Id },
+            //new { @class = "excluir-post" })
+        }
+
+    </div>
+    <div class=" col-md-2">
+        <h3>Tags</h3>
+        <ul>
+            @foreach (var item in Model.Tags)
+            {
+                <li>@Html.ActionLink(item, "Index", "Blog", new { tag = item }, null)</li>
+            }
+
+        </ul>
+    </div>
+</div>
+@Html.Partial("_Paginacao", Model)
+
+   
+

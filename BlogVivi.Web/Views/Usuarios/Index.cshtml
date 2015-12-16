@@ -1,0 +1,30 @@
+﻿@model List<BlogVivi.db.Classes.Usuario>
+@{
+    ViewBag.Title = "Index";
+}
+@section Scripts
+{
+    <script src="@Url.Content("~/Scripts/Views/Usuario/Index.js")"></script>
+}
+<br/>
+<button type="button" class="btn" aria-label="Left Align">
+    @Html.ActionLink("Novo Usuário", "CadastrarUsuario", "Usuarios", "") <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+</button>
+
+
+@foreach (var item in Model)
+{
+    <h2>@item.Login</h2>
+        <div>
+            @item.Nome
+        </div>
+        <div class="div-imagem icone-editar"></div>
+        @Html.ActionLink("Editar", "EditarUsuario", "Usuarios", new { id = item.Id },
+                                                               new { @class = "editar-post" })
+
+    <div class="div-imagem icone-excluir"></div>
+    @Html.ActionLink("Excluir", "ExcluirUsuario", "Usuarios", new { id = item.Id },
+                                                               new { @class = "excluir-post" })
+}
+
+

@@ -1,0 +1,44 @@
+﻿@model BlogVivi.Web.Models.Usuarios.CadastrarUsuariosViewModel
+
+@{
+    ViewBag.Title = "EditarUsuario";
+}
+
+<h2>Editar Usuario</h2>
+
+@using (@Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.id)
+        @Html.TextBoxFor(x => x.id, new { @class = "form-control", @disabled = "Disabled" })
+        @Html.ValidationMessageFor(x => x.id)
+        @Html.HiddenFor(x => x.id) <!-- campo invisivel-->
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Nome) <!--rotulo do campo-->
+        @Html.TextBoxFor(x => x.Nome, new { @class = "form-control" })<!--imput campo -->
+        @Html.ValidationMessageFor(x => x.Nome)<!--validação do campo-->
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Login) <!--rotulo do campo-->
+        @Html.TextBoxFor(x => x.Login, new { @class = "form-control" })<!--imput campo -->
+        @Html.ValidationMessageFor(x => x.Login)<!--validação do campo-->
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Senha) <!--rotulo do campo-->
+        @Html.PasswordFor(x => x.Senha, new { @class = "form-control" })<!--imput campo, usa password para mascarar campo -->
+        @Html.ValidationMessageFor(x => x.Senha)<!--validação do campo-->
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.ConfirmarSenha) <!--rotulo do campo-->
+        @Html.PasswordFor(x => x.ConfirmarSenha, new { @class = "form-control" })<!--imput campo, usa password para mascarar campo -->
+        @Html.ValidationMessageFor(x => x.ConfirmarSenha)<!--validação do campo-->
+    </div>
+    <p>
+        <input type="submit" value="Salvar" class="btn btn-primary" /><!--botão submit ou salvar-->
+    </p>
+}

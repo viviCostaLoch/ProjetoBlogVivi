@@ -1,0 +1,80 @@
+﻿@model BlogVivi.Web.Models.Administracao .CadastrarPostViewModel
+@{
+    ViewBag.Title = "CadastrarPost";
+}
+@section Scripts
+{
+    <script src ="@Url.Content("~/Scripts/Views/Administracao/Cadastrarpost.js")"></script>
+    }
+@using (@Html.BeginForm())
+{
+<h2>CadastrarPost</h2>
+    @Html.ValidationSummary(true)
+
+    
+<div class="form-group">
+    @Html.LabelFor(x => x.Titulo)
+    @Html.TextBoxFor(x => x.Titulo, new { @class ="form-control"})
+    @Html.ValidationMessageFor(x=> x.Titulo)
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(x => x.Autor)
+    @Html.TextBoxFor(x => x.Autor, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Autor)
+</div>
+<div class="form-group">
+    @Html.LabelFor(x => x.datadepublicacao)
+    @Html.TextBoxFor(x => x.datadepublicacao,"{0:yyyy-MM-dd}", new { type= "date", @class = "form-control" ,style = "width: 200px"})
+    @Html.ValidationMessageFor(x => x.datadepublicacao)
+</div> 
+<div class="form-group">
+@Html.LabelFor(x => x.horadepublicacao)
+@Html.TextBoxFor(x => x.horadepublicacao, "{0:HH:mm}", new { type = "time", @class = "form-control", style = "width: 200px" })
+    @Html.ValidationMessageFor(x => x.horadepublicacao)
+</div>
+<div class="checkbox">
+    @Html.LabelFor(x => x.Visivel)
+    @Html.CheckBoxFor(x => x.Visivel)
+    @Html.ValidationMessageFor(x => x.Visivel)
+</div>
+<div class="form-group">
+    @Html.LabelFor(x => x.descricao)
+    @Html.TextAreaFor(x => x.descricao, new {rows =8, @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.descricao)
+</div>
+<div class="form-group">
+    @Html.LabelFor(x => x.Resumo)
+    @Html.TextAreaFor(x => x.Resumo, new {rows =8, @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Resumo)
+</div>
+    <h2>Tags</h2>
+    
+<div class="form-group cadastro-post">
+@Html.Label("Tag")
+@Html.TextBox("Tag", "", new { @class = "form-control"})
+
+    <p>
+        <input type="button" value="Adicionar" id="adicionar" class="btn btn-primary" />
+    </p>
+
+</div>
+
+    <div class = "Form-group">
+        <ul id ="resultado">
+            @if (Model.Tags != null)
+            {
+                foreach (var item in Model.Tags)
+                {
+                    <li><span>@item</span> <a tag="@item" class="remover-tag icone-excluir" title="Remover"></a></li>  
+                    <Input type="hidden" name="Tags" value="@item"/>
+                }
+            }
+        </ul>
+    </div>
+
+
+<p>
+    <input type="submit" value="Salvar" class="btn btn-primary" />
+</p>
+}
