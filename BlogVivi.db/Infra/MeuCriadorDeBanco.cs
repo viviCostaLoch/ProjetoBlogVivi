@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BlogVivi.db.Infra
 {
-  public  class MeuCriadorDeBanco : DropCreateDatabaseIfModelChanges<ConexaoBanco>
+  public  class MeuCriadorDeBanco : DropCreateDatabaseAlways<ConexaoBanco>
     {
         protected override void Seed(ConexaoBanco context)
         {
