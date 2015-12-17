@@ -118,7 +118,7 @@ namespace BlogVivi.Web.Controllers
            
             if (post== null)
             {
-                throw new Exception(string.Format("Post codigo {0} não encontrado", viewModel.id));
+                throw new Exception(string.Format("Post codigo {0} não encontrado ", viewModel.id));
             }
 
             var comentario = new Comentario();
