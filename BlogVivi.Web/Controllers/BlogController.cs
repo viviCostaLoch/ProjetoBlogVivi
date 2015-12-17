@@ -43,7 +43,18 @@ namespace BlogVivi.Web.Controllers
             var qtdePaginas = Math.Ceiling((decimal) qtdRegistros / registrosPorPagina);
 
             var viewModel = new ListarPostViewModel();
-            viewModel.Posts = (from p in posts orderby p.DataPublicacao descending select p).Skip(qtdeRegistrosPular).Take (registrosPorPagina).ToList();
+            viewModel.Posts = (from p in posts orderby p.DataPublicacao
+                               descending select new DetalhesPostViewModel {
+                                   datadepublicacao = p.DataPublicacao,
+                                   Autor = p.Autor,
+                                   descricao = p.Descricao,
+                                   id = p.Id,
+                                   Resumo = p.Resumo,
+                                   Titulo = p.Titulo,
+                                   Visivel = p.Visivel,
+                                   QtdComentarios = p.Comentario.Count,
+
+                               }).Skip(qtdeRegistrosPular).Take (registrosPorPagina).ToList();
             viewModel.PaginaAtual = paginaCorreta;
             viewModel.TotalPaginas = (int)qtdePaginas;
             viewModel.Tag = Tag;
@@ -58,20 +69,89 @@ namespace BlogVivi.Web.Controllers
             return PartialView();
         }
 
-        public ActionResult Post(int id)
+        public ActionResult Post(int id,int?pagina )
         {
             var conexaoBanco = new ConexaoBanco();
             var posts = (from x in conexaoBanco.Posts where x.Id == id select x).FirstOrDefault();
-           
+
             var viewModel = new DetalhesPostViewModel();
+            PreencherViewModel(posts, viewModel, pagina);
+            return View(viewModel);
+        }
+
+        private  void PreencherViewModel(Post posts, DetalhesPostViewModel viewModel, int? pagina)
+        {
             viewModel.id = posts.Id;
             viewModel.Resumo = posts.Resumo;
             viewModel.Titulo = posts.Titulo;
             viewModel.datadepublicacao = posts.DataPublicacao;
             viewModel.Autor = posts.Autor;
             viewModel.descricao = posts.Descricao;
+            viewModel.QtdComentarios = posts.Comentario.Count;
             viewModel.Tags = (from p in posts.PostTag select p.IdTag).ToList();
+
+            var paginaCorreta = pagina.GetValueOrDefault(1);
+            var registrosPorPagina = 10;
+            var qtdRegistros = posts.Comentario.Count();
+            var indiceDaPagina = paginaCorreta - 1;
+            var qtdeRegistrosPular = (indiceDaPagina * registrosPorPagina);
+            var qtdePaginas = Math.Ceiling((decimal)qtdRegistros / registrosPorPagina);
+            viewModel.Comentarios = (from p in posts.Comentario
+                                     orderby p.DataHora descending
+                                     select p).Skip(qtdeRegistrosPular).Take(registrosPorPagina).ToList();
+            viewModel.PaginaAtual = paginaCorreta;
+            viewModel.TotalPaginas =(int)qtdePaginas;
+
+        }
+
+        [HttpPost]
+        public ActionResult Post(DetalhesPostViewModel viewModel)
+        {
+            var conexaoBanco = new ConexaoBanco();
+            var post = (from p in conexaoBanco.Posts
+                        where p.Id == viewModel.id
+                        select p).FirstOrDefault();
+            if (ModelState.IsValid)
+            {
+
+           
+           
+            if (post== null)
+            {
+                throw new Exception(string.Format("Post codigo {0} não encontrado", viewModel.id));
+            }
+
+            var comentario = new Comentario();
+            comentario.AdmPost = HttpContext.User.Identity.IsAuthenticated;
+            comentario.Descricao = viewModel.ComentarioDescricao;
+            comentario.Email = viewModel.ComentarioEmail;
+            comentario.IdPost = viewModel.id;
+            comentario.Nome = viewModel.ComentarioNome;
+            comentario.PaginaWeb = viewModel.ComentarioPaginaWeb;
+            comentario.DataHora = DateTime.Now;
+
+            try
+            {
+                conexaoBanco.Comentarios.Add(comentario);
+                conexaoBanco.SaveChanges();
+                return Redirect(Url.Action("Post", new
+                {
+                    ano = post.DataPublicacao.Year,
+                    mes = post.DataPublicacao.Month,
+                    dia = post.DataPublicacao.Day,
+                    titulo = post.Titulo,
+                    id = post.Id
+                })+ "#comentarios");
+            }
+            catch (Exception exp)
+            {
+
+                ModelState.AddModelError("", exp.Message);
+            }
+            }
+            PreencherViewModel(post, viewModel,null);
             return View(viewModel);
+
         }
     }
 }

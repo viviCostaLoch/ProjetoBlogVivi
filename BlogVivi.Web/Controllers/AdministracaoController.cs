@@ -185,6 +185,33 @@ namespace BlogVivi.Web.Controllers
             return RedirectToAction("Index", "Blog");
         }
 
+        #region ExcluirComentario
+        public ActionResult ExcluirComentario(int id)
+        {
+            var conexaoBanco = new ConexaoBanco();
+            var comentario = (from p in conexaoBanco.Comentarios
+                              where p.Id == id
+                              select p).FirstOrDefault();
+            if (comentario == null)
+            {
+                throw new Exception(string.Format("Comentário código {0} não foi encontrado.", id));
+            }
+            conexaoBanco.Comentarios.Remove(comentario);
+            conexaoBanco.SaveChanges();
+
+            var post = (from p in conexaoBanco.Posts
+                        where p.Id == comentario.IdPost
+                        select p).First();
+            return Redirect(Url.Action("Post", "Blog", new
+            {
+                ano = post.DataPublicacao.Year,
+                mes = post.DataPublicacao.Month,
+                dia = post.DataPublicacao.Day,
+                titulo = post.Titulo,
+                id = post.Id
+            }) + "#comentarios");
+        }
+        #endregion
 
     }
 }

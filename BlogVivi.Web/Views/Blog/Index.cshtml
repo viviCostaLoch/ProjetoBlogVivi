@@ -7,7 +7,7 @@
         tipoPesquisa = string.Format("  - Tag: {0}", Model.Tag);
     }
 }
-    
+
 @section Scripts
 {
     <script src="@Url.Content("~/Scripts/Views/Blog/Index.js")"></script>
@@ -17,21 +17,24 @@
     <div class="col-md-10">
         @foreach (var item in Model.Posts)
         {
-            <h2>@Html.ActionLink(item.Titulo, "Post", "Blog", new { id = item.Id, ano = item.DataPublicacao.Year, mes = item.DataPublicacao.Month, dia = item.DataPublicacao.Day, titulo = item.Titulo }, null)</h2>
+            <h2>@Html.ActionLink(item.Titulo, "Post", "Blog", new { id = item.id, ano = item.datadepublicacao.Year,
+               mes = item.datadepublicacao.Month, dia = item.datadepublicacao.Day, titulo = item.Titulo }, null)</h2>
             <div>
                 <div class="div-imagem icone-calendario"></div>
-                @item.DataPublicacao.ToString("dd/MM/yyyy HH:mm")
+                @item.datadepublicacao.ToString("dd/MM/yyyy HH:mm")
                 <div class="div-imagem icone-autor"></div>
                 @item.Autor
                 <div class="div-imagem icone-comentario"></div>
-                @item.Comentario.Count
-                @if (Request.IsAuthenticated) { 
-                <div class="div-imagem icone-editar"></div>
-                @Html.ActionLink("Editar", "EditarPost", "Administracao", new { id = item.Id },
+                <a href="@Url.Action( "Post", "Blog", new { id = item.id, ano = item.datadepublicacao.Year,
+                    mes = item.datadepublicacao.Month, dia = item.datadepublicacao.Day, titulo = item.Titulo })#comentarios">@item.QtdComentarios</a>
+                @if (Request.IsAuthenticated)
+                {
+                    <div class="div-imagem icone-editar"></div>
+                    @Html.ActionLink("Editar", "EditarPost", "Administracao", new { id = item.id },
                                                                new { @class = "editar-post" })
-                
-                <div class="div-imagem icone-excluir"></div>
-                @Html.ActionLink("Excluir", "ExcluirPost", "Administracao", new { id = item.Id },
+
+                    <div class="div-imagem icone-excluir"></div>
+                    @Html.ActionLink("Excluir", "ExcluirPost", "Administracao", new { id = item.id },
                                                                 new { @class = "excluir-post" })
                 }
             </div>
@@ -39,17 +42,17 @@
 
             <div>
                 @item.Resumo
-                
+
             </div>
 
             <div>
-               
+
                 @Html.ActionLink("Continue lendo...", "Post", "Blog", new
            {
-               id = item.Id,
-               ano = item.DataPublicacao.Year,
-               mes = item.DataPublicacao.Month,
-               dia = item.DataPublicacao.Day,
+               id = item.id,
+               ano = item.datadepublicacao.Year,
+               mes = item.datadepublicacao.Month,
+               dia = item.datadepublicacao.Day,
                titulo = item.Titulo
            }, null)
             </div>
@@ -73,5 +76,5 @@
 </div>
 @Html.Partial("_Paginacao", Model)
 
-   
+
 

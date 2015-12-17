@@ -16,7 +16,7 @@
     <div class="div-imagem icone-autor"></div>
     @Model.Autor
     <div class="div-imagem icone-comentario"></div>
-    0
+   @Model.QtdComentarios
    @if(Request.IsAuthenticated){
     <div class="div-imagem icone-editar"></div>
     @Html.ActionLink("Editar", "EditarPost", "Administracao", new { id = @Model.id },
@@ -41,5 +41,86 @@
             }
         }
     </ul>
+</div>
+<div>
+    <h3>Novo Comentário</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(x=> x.id)
+
+        <div class=" Form-group">
+            @Html.LabelFor(m => m.ComentarioNome)
+            @Html.TextBoxFor(m=> m.ComentarioNome, new {@class = "form-control"})
+            @Html.ValidationMessageFor(m=> m.ComentarioNome)
+
+        </div>
+        <div class=" Form-group">
+            @Html.LabelFor(m => m.ComentarioEmail)
+            @Html.TextBoxFor(m => m.ComentarioEmail, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ComentarioEmail)
+
+        </div>
+        <div class=" Form-group">
+            @Html.LabelFor(m => m.ComentarioPaginaWeb)
+            @Html.TextBoxFor(m => m.ComentarioPaginaWeb, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ComentarioPaginaWeb)
+
+        </div>
+        <div class=" Form-group">
+            @Html.LabelFor(m => m.ComentarioDescricao)
+            @Html.TextAreaFor(m => m.ComentarioDescricao, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ComentarioDescricao)
+
+</div>
+        <p>
+            <br/>
+            <input type="submit" value="Salvar" class="btn btn-primary"
+        </p>
+    }
+
+    <div id="comentarios">
+        <h3>Comentários</h3>
+        @{
+            var contador = 0;
+        }
+        @foreach (var item in Model.Comentarios)
+        {
+            contador++;
+            string id = "comentario" + contador.ToString();
+            string cssClass = "text-info";
+            if (item.AdmPost)
+            {
+                cssClass = "label label-info";
+            }
+            <div>
+                <a id="@item.Id"></a>
+                <p>
+                    <span class="@cssClass">@item.Nome</span><br />
+                    <small>
+                        @item.DataHora.ToString("dd/MM/yyyy HH:mm:ss")
+                        @if (!string.IsNullOrEmpty(item.PaginaWeb))
+                        {
+                            <text>|</text>
+                            <a href="@item.PaginaWeb">@item.PaginaWeb</a>
+                        }
+                        @if (this.Request.IsAuthenticated)
+                        {
+                            <text>|</text>
+                            @Html.ActionLink("Remover", "ExcluirComentario", "Administracao", new { id = item.Id }, new { @class = "excluir-comentario" })
+                        }
+                    </small>
+                </p>
+                @Html.Raw(Html.Encode(item.Descricao).Replace("\n", "<br />"))
+            </div>
+
+            if (contador < this.Model.Comentarios.Count)
+            {
+                <hr />
+            }
+        }
+    </div>
+
 </div>
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlogVivi.db.Classes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -18,8 +19,9 @@ namespace BlogVivi.Web.Models.Blog
         public string descricao { get; set; }
         public Boolean Visivel { get; set; }
         public List<string> Tags { get; set; }
+        public int QtdComentarios { get; set; }
 
-        /*cadastar comentaio*/
+        /*cadastar comentario*/
         [DisplayName("Nome")]
         [StringLength(100,ErrorMessage ="o campo deve possuir no máximo {1} caracteres!")]
         [Required(ErrorMessage ="O campo nome é obrigatório")]
@@ -29,7 +31,19 @@ namespace BlogVivi.Web.Models.Blog
         [StringLength(100, ErrorMessage ="O campo E-mail deve possuir {1} caracteres!")]
         [EmailAddress(ErrorMessage ="E-mail invalido!")]
         public string ComentarioEmail { get; set; }
+
+        [DisplayName("Descrição")]
+        [Required(ErrorMessage ="O campo descrição è obrigatório!!")]
         public string ComentarioDescricao { get; set; }
+
+        [DisplayName(" Pagina Web")]
+        [StringLength(100, ErrorMessage = "O campo E-mail deve possuir {1} caracteres!")]
         public string ComentarioPaginaWeb { get; set; }
+
+        /* Listar Comentarios*/
+
+        public int PaginaAtual { get; set; }
+        public int TotalPaginas { get; set; }
+        public IList<Comentario> Comentarios{ get; set; }
     }
 }
