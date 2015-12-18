@@ -11,7 +11,7 @@ namespace BlogVivi.db.Infra
     {
         protected override void Seed(ConexaoBanco context)
         {
-            context.Usuarios.Add(new Classes.Usuario { Login = "ADM", Nome = " Administrador ", Senha = "admin" });
+            context.Usuarios.Add(new Classes.Usuario { Login = "ADM", Nome = " Administrador  ", Senha = "admin" });
             base.Seed(context);
         }
     }
