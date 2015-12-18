@@ -200,6 +200,7 @@
     <Content Include="Views\Blog\Post.cshtml" />
     <Content Include="Views\Usuarios\EditarUsuario.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Blog\_PaginacaoPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -253,7 +254,6 @@
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
-
   <PropertyGroup>
     <PostBuildEvent>
       if not exist "$(WebProjectOutputDir)\bin\Roslyn" md "$(WebProjectOutputDir)\bin\Roslyn"

@@ -16,14 +16,15 @@
     <div class="div-imagem icone-autor"></div>
     @Model.Autor
     <div class="div-imagem icone-comentario"></div>
-   @Model.QtdComentarios
-   @if(Request.IsAuthenticated){
-    <div class="div-imagem icone-editar"></div>
-    @Html.ActionLink("Editar", "EditarPost", "Administracao", new { id = @Model.id },
+    @Model.QtdComentarios
+    @if (Request.IsAuthenticated)
+    {
+        <div class="div-imagem icone-editar"></div>
+        @Html.ActionLink("Editar", "EditarPost", "Administracao", new { id = @Model.id },
                                                                new { @class = "editar-post" })
-    
-    <div class="div-imagem icone-excluir"></div>
-    @Html.ActionLink("Excluir", "ExcluirPost", "Administracao", new { id =@Model.id },new { @class = "excluir-post" })
+
+        <div class="div-imagem icone-excluir"></div>
+        @Html.ActionLink("Excluir", "ExcluirPost", "Administracao", new { id = @Model.id }, new { @class = "excluir-post" })
     }
 </div>
 
@@ -36,8 +37,8 @@
                 foreach (var item in Model.Tags)
                 {
                 <li>@Html.ActionLink(item, "Index", "Blog", new { tag = item }, null)</li>
-                
-                    <Input type="hidden" name="Tags" value="@item" />
+
+                <Input type="hidden" name="Tags" value="@item" />
             }
         }
     </ul>
@@ -48,12 +49,12 @@
     @using (Html.BeginForm())
     {
         @Html.ValidationSummary(true)
-        @Html.HiddenFor(x=> x.id)
+        @Html.HiddenFor(x => x.id)
 
         <div class=" Form-group">
             @Html.LabelFor(m => m.ComentarioNome)
-            @Html.TextBoxFor(m=> m.ComentarioNome, new {@class = "form-control"})
-            @Html.ValidationMessageFor(m=> m.ComentarioNome)
+            @Html.TextBoxFor(m => m.ComentarioNome, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ComentarioNome)
 
         </div>
         <div class=" Form-group">
@@ -73,9 +74,9 @@
             @Html.TextAreaFor(m => m.ComentarioDescricao, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.ComentarioDescricao)
 
-</div>
+        </div>
         <p>
-            <br/>
+            <br />
             <input type="submit" value="Salvar" class="btn btn-primary"
         </p>
     }
@@ -121,6 +122,7 @@
             }
         }
     </div>
-
+</div>
+@Html.Partial("_PaginacaoPost", Model)
 </div>
 
